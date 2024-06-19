@@ -1,0 +1,70 @@
+{% extends './index.html' %}
+
+{% block title %} Aulas {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    
+    <div class="contenidoSecundaria">
+        <div class="row">
+            <h1>Classroom Manager</h1>
+    
+    <h2>Agregar Aula</h2>
+    <form id="addAulaForm" action="/add_aula" method="post">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="ubicacion" placeholder="Ubicación" required>
+        <input type="number" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Agregar Aula">
+    </form>
+
+    <h2>Aulas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aula in aulas %}
+            <tr>
+                <td>{{ aula.id }}</td>
+                <td>{{ aula.nombre }}</td>
+                <td>{{ aula.ubicacion }}</td>
+                <td>{{ aula.estado }}</td>
+                <td>
+                    <form action="/delete_aula/{{ aula.id }}" method="post" style="display:inline;">
+                        <input type="submit" value="Inactivar">
+                    </form>
+                    <button type="button" onclick="editAula('{{ aula.id }}', '{{ aula.nombre }}', '{{ aula.ubicacion }}', '{{ aula.estado }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Actualizar Aula</h2>
+    <form id="updateAulaForm" action="/update_aula" method="post">
+        <input type="hidden" id="aulaId" name="id">
+        <input type="text" id="updateNombreAula" name="nombre" placeholder="Nombre" required>
+        <input type="text" id="updateUbicacionAula" name="ubicacion" placeholder="Ubicación" required>
+        <input type="number" id="updateEstadoAula" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Actualizar Aula">
+    </form>
+
+    <script>
+        function editAula(id, nombre, ubicacion, estado) {
+            document.getElementById('aulaId').value = id;
+            document.getElementById('updateNombreAula').value = nombre;
+            document.getElementById('updateUbicacionAula').value = ubicacion;
+            document.getElementById('updateEstadoAula').value = estado;
+        }
+    </script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

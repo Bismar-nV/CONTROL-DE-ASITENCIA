@@ -1,0 +1,103 @@
+{% extends './index.html' %}
+
+{% block title%} Clases {% endblock %}
+
+{% block body %}
+<div class="contenidoSecundaria">
+    <div class="row">
+        <h1>Class Manager</h1>
+        <h2>Agregar Clase</h2>
+<form id="addClaseForm" action="/add_clase" method="post">
+    <select name="materia_id" required>
+        <option value="">Seleccione Materia</option>
+        {% for materia in materias %}
+        <option value="{{ materia.id }}">{{ materia.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select name="docente_id" required>
+        <option value="">Seleccione Docente</option>
+        {% for docente in docentes %}
+        <option value="{{ docente.id }}">{{ docente.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select name="aula_id" required>
+        <option value="">Seleccione Aula</option>
+        {% for aula in aulas %}
+        <option value="{{ aula.id }}">{{ aula.nombre }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="horario" placeholder="Horario" required>
+    <input type="number" name="estado" placeholder="Estado" required>
+    <input type="submit" value="Agregar Clase">
+</form>
+
+<h2>Clases</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Materia</th>
+            <th>Docente</th>
+            <th>Aula</th>
+            <th>Horario</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for clase in clases %}
+        <tr>
+            <td>{{ clase.id }}</td>
+            <td>{{ clase.materia_nombre }}</td>
+            <td>{{ clase.docente_nombre }}</td>
+            <td>{{ clase.aula_nombre }}</td>
+            <td>{{ clase.horario }}</td>
+            <td>{{ clase.estado }}</td>
+            <td>
+                <form action="/delete_clase/{{ clase.id }}" method="post" style="display:inline;">
+                    <input type="submit" value="Inactivar">
+                </form>
+                <button type="button" onclick="editClase('{{ clase.id }}', '{{ clase.materia_id }}', '{{ clase.docente_id }}', '{{ clase.aula_id }}', '{{ clase.horario }}', '{{ clase.estado }}')">Editar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Actualizar Clase</h2>
+<form id="updateClaseForm" action="/update_clase" method="post">
+    <input type="hidden" id="claseId" name="id">
+    <select id="updateMateriaId" name="materia_id" required>
+        <option value="">Seleccione Materia</option>
+        {% for materia in materias %}
+        <option value="{{ materia.id }}">{{ materia.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select id="updateDocenteId" name="docente_id" required>
+        <option value="">Seleccione Docente</option>
+        {% for docente in docentes %}
+        <option value="{{ docente.id }}">{{ docente.nombre }}</option>
+        {% endfor %}
+    </select>
+    <select id="updateAulaId" name="aula_id" required>
+        <option value="">Seleccione Aula</option>
+        {% for aula in aulas %}
+        <option value="{{ aula.id }}">{{ aula.nombre }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" id="updateHorario" name="horario" placeholder="Horario" required>
+    <input type="number" id="updateEstado" name="estado" placeholder="Estado" required>
+    <input type="submit" value="Actualizar Clase">
+</form>
+
+<script>
+    function editClase(id, materia_id, docente_id, aula_id, horario, estado) {
+        document.getElementById('claseId').value = id;
+        document.getElementById('updateMateriaId').value = materia_id;
+        document.getElementById('updateDocenteId').value = docente_id;
+        document.getElementById('updateAulaId').value = aula_id;
+        document.getElementById('updateHorario').value = horario;
+        document.getElementById('updateEstado').value = estado;
+    }
+</script>
+{% endblock %}

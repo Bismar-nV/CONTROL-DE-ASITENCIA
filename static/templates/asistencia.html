@@ -1,0 +1,82 @@
+{% extends './index.html' %}
+
+{% block title %} Lista de Asistencia {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="contenidoPrimaria mb-4">
+        <p id="plat1">Contenido</p>
+        <p id="plat2">LISTA DE ASISTENCIA</p>
+        <p id="plat3">COMPARACIÓN DE FOTOS</p>
+    </div>
+    <div class="contenidoSecundaria">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="form bg-dark text-white p-4 rounded">
+                    <h2 class="text-center">Comparar Fotos</h2>
+                    <div class="mb-3">
+                        <label for="foto1" class="form-label">Foto 1:</label>
+                        <input type="file" id="foto1" class="form-control" accept="image/*">
+                        <img id="preview1" src="#" alt="Vista previa Foto 1" class="img-fluid mt-2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto2" class="form-label">Foto 2:</label>
+                        <input type="file" id="foto2" class="form-control" accept="image/*">
+                        <img id="preview2" src="#" alt="Vista previa Foto 2" class="img-fluid mt-2">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" onclick="comparePhotos()">Comparar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="table bg-dark text-white p-4 rounded">
+                    <div class="table-header mb-3 d-flex justify-content-between">
+                        <input type="text" id="search" class="form-control w-50" placeholder="Buscar por nombre" onkeyup="searchAttendance()">
+                    </div>
+                    <table id="dataTable" class="table table-dark table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Fecha</th>
+                                <th>Asistencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se llenarán dinámicamente los datos de asistencia -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('foto1').onchange = function (e) {
+    let reader = new FileReader();
+    reader.onload = function (event) {
+        document.getElementById('preview1').src = event.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+};
+
+document.getElementById('foto2').onchange = function (e) {
+    let reader = new FileReader();
+    reader.onload = function (event) {
+        document.getElementById('preview2').src = event.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+};
+
+function comparePhotos() {
+    // Lógica de comparación de fotos
+}
+
+function searchAttendance() {
+    // Lógica de búsqueda de asistencia
+}
+</script>
+{% endblock %}

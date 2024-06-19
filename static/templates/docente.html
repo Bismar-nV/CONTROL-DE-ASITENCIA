@@ -1,0 +1,70 @@
+{% extends './index.html' %}
+
+{% block title %} Docentes {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="contenidoPrimaria mb-4">
+        <p id="plat1">Contenido</p>
+        <p id="plat2">CONTENIDO DE LOS DATOS DEL DOCENTE</p>
+        <p id="plat3">CONTENIDO DE LOS DATOS DEL DOCENTE</p>
+    </div>
+    <div class="contenidoSecundaria">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="form bg-dark text-white p-4 rounded">
+                    <h2 class="text-center">Ingrese sus datos</h2>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre:</label>
+                        <input type="text" id="name" class="form-control" placeholder="Nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Edad:</label>
+                        <input type="text" id="age" class="form-control" placeholder="Edad">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo:</label>
+                        <input type="email" id="email" class="form-control" placeholder="Correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Teléfono:</label>
+                        <input type="text" id="phone" class="form-control" placeholder="Teléfono">
+                    </div>
+                    <input type="hidden" id="contactId">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" onclick="addData()">Guardar</button>
+                        <button class="btn btn-secondary" onclick="updateData()">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="table bg-dark text-white p-4 rounded">
+                    <div class="table-header mb-3 d-flex justify-content-between">
+                        <input type="text" id="search" class="form-control w-50" placeholder="Buscar por el nombre" onkeyup="searchData()">
+                        <div>
+                            <button class="btn btn-warning me-2" onclick="editFieldText()">Editar</button>
+                            <button class="btn btn-danger" onclick="deleteData()">Borrar</button>
+                            <!-- <button class="btn btn-info" onclick="savePDF()">Descargar en PDF</button> -->
+                            <!-- <button class="btn btn-success" onclick="saveExcel()">Descargar en EXCEL</button> -->
+                        </div>
+                    </div>
+                    <table id="dataTable" class="table table-dark table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>Nombre</th>
+                                <th>Edad</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se llenarán dinámicamente los datos de los docentes -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

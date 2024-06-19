@@ -1,0 +1,54 @@
+{% extends './index.html' %}
+
+{% block title %} Carreras {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="contenidoPrimaria mb-4">
+        <p id="plat1">Contenido</p>
+        <p id="plat2">CONTENIDO DE LOS DATOS DE LA CARRERA</p>
+        <p id="plat3">CONTENIDO DE LOS DATOS DE LA CARRERA</p>
+    </div>
+    <div class="contenidoSecundaria">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="form bg-dark text-white p-4 rounded">
+                    <h2 class="text-center">Ingrese los datos de la Carrera</h2>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre">
+                    </div>
+                    <input type="hidden" id="carreraId">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary" onclick="addCarrera()">Guardar</button>
+                        <button class="btn btn-secondary" onclick="updateCarrera()">Actualizar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="table bg-dark text-white p-4 rounded">
+                    <div class="table-header mb-3 d-flex justify-content-between">
+                        <input type="text" id="search" class="form-control w-50" placeholder="Buscar por nombre" onkeyup="searchCarreras()">
+                        <div>
+                            <button class="btn btn-warning me-2" onclick="editCarreraFieldText()">Editar</button>
+                            <button class="btn btn-danger" onclick="deleteCarreras()">Borrar</button>
+                        </div>
+                    </div>
+                    <table id="dataTable" class="table table-dark table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se llenarán dinámicamente los datos de las carreras -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

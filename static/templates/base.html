@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/cruds.css">
+    <link rel="stylesheet" href="/static/css/content.css">
+</head>
+<body class="fond">
+    <div class="menu">
+        <ion-icon name="menu-outline"></ion-icon>
+        <ion-icon name="close-outline"></ion-icon>
+    </div>
+
+    <div class="barra-lateral">
+        <div>
+            <div class="nombre-pagina">
+                <ion-icon id="cloud" name="cloud-outline"></ion-icon>
+                <span>Apex</span>
+            </div>            
+        </div>
+
+        <nav class="navegacion">
+            <ul>
+                <li>
+                    <a id="inbox" href="{{ url_for('dashboard') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>MENU</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('estudiante') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>estudiante</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('docente') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>docente</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('carrera') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>carrera</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('materia') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>materia</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('aula') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>aula</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('clase') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>clase</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('asistencia') }}">
+                        <ion-icon name="document-text-outline"></ion-icon>
+                        <span>asistencia</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div>
+            <div class="linea"></div>
+
+            <div class="modo-oscuro">
+                <div class="info">
+                    <ion-icon name="moon-outline"></ion-icon>
+                    <span>Dark Mode</span>
+                </div>
+                <div class="switch">
+                    <div class="base">
+                        <div class="circulo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="usuario">
+                <img src="/static/img/Jhampier.jpg" alt="">
+                <div class="info-usuario">
+                    <div class="nombre-email">
+                        <span class="nombre">Jhampier</span>
+                        <span class="email">jhampier@gmail.com</span>
+                    </div>
+                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="content">
+            {% block body %}
+            {% endblock %}
+        </div>        
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/script1.js"></script>
+    <script src="/static/js/aula.js"></script>
+    <script src="/static/js/carrera.js"></script>
+    <script src="/static/js/clases.js"></script>
+    <script src="/static/js/docentes.js"></script>
+    <script src="/static/js/estuduante.js"></script>
+    <script src="/static/js/materia.js"></script>
+</body>
+</html>

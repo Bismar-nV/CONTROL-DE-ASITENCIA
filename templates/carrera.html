@@ -1,0 +1,60 @@
+{% extends './index.html' %}
+
+{% block title %} Carreras {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Career Manager</h1>
+    
+    <h2>Agregar Carrera</h2>
+    <form id="addCarreraForm" action="/add_carrera" method="post">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="number" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Agregar Carrera">
+    </form>
+
+    <h2>Carreras</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carrera in carreras %}
+            <tr>
+                <td>{{ carrera.id }}</td>
+                <td>{{ carrera.nombre }}</td>
+                <td>{{ carrera.estado }}</td>
+                <td>
+                    <form action="/delete_carrera/{{ carrera.id }}" method="post" style="display:inline;">
+                        <input type="submit" value="Inactivar">
+                    </form>
+                    <button type="button" onclick="editCarrera('{{ carrera.id }}', '{{ carrera.nombre }}', '{{ carrera.estado }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Actualizar Carrera</h2>
+    <form id="updateCarreraForm" action="/update_carrera" method="post">
+        <input type="hidden" id="carreraId" name="id">
+        <input type="text" id="updateNombreCarrera" name="nombre" placeholder="Nombre" required>
+        <input type="number" id="updateEstadoCarrera" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Actualizar Carrera">
+    </form>
+
+    <script>
+        function editCarrera(id, nombre, estado) {
+            document.getElementById('carreraId').value = id;
+            document.getElementById('updateNombreCarrera').value = nombre;
+            document.getElementById('updateEstadoCarrera').value = estado;
+        }
+    </script>
+
+</div>
+{% endblock %}
