@@ -1,12 +1,11 @@
 import pyodbc
-import base64
 
 class EstudianteManager:
     def __init__(self):
         self.connection = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
-            'SERVER=NOGALES\\BISMAR;'  
-            'DATABASE=REGISTRO_DIGITAL;'
+            'SERVER=NOGALES\\NOGALES;'  
+            'DATABASE=PDIregistroDigital;'
             'UID=sa;'
             'PWD=13652938'
         )
@@ -16,8 +15,7 @@ class EstudianteManager:
                    VALUES (?, ?, ?, ?, ?)'''
         cursor = self.connection.cursor()
         try:
-            foto_binario = base64.b64decode(foto.split(',')[1]) if foto else None
-            cursor.execute(query, (nombre, apellido, email, foto_binario, estado))
+            cursor.execute(query, (nombre, apellido, email, foto, estado))
             self.connection.commit()
         except Exception as e:
             print(f"Error al agregar estudiante: {e}")
@@ -41,9 +39,8 @@ class EstudianteManager:
         cursor = self.connection.cursor()
         try:
             if foto:
-                query = '''UPDATE Estudiante SET nombre = ?, apellido = ?, email = ?, foto = CONVERT(varbinary(max), ?), estado = ? WHERE id = ?'''
-                foto_binario = base64.b64decode(foto.split(',')[1])  # Decodifica la imagen base64
-                cursor.execute(query, (nombre, apellido, email, foto_binario, estado, estudiante_id))
+                query = '''UPDATE Estudiante SET nombre = ?, apellido = ?, email = ?, foto = ?, estado = ? WHERE id = ?'''
+                cursor.execute(query, (nombre, apellido, email, foto, estado, estudiante_id))
             else:
                 query = '''UPDATE Estudiante SET nombre = ?, apellido = ?, email = ?, estado = ? WHERE id = ?'''
                 cursor.execute(query, (nombre, apellido, email, estado, estudiante_id))

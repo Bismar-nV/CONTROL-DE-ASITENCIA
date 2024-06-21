@@ -1,108 +1,198 @@
 {% extends './index.html' %}
 
-{% block title %} Docentes {% endblock %}
+{% block title %}
+Docentes
+{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="contenidoSecundaria">
-        <div class="row">
-            <h1>Docente Manager</h1>
-    
-    <h2>Agregar Docente</h2>
-    <form id="addDocenteForm" action="/add_docente" method="post" enctype="multipart/form-data">
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="text" name="apellido" placeholder="Apellido" required>
-        <input type="email" name="email" placeholder="Correo" required>
-        <input type="hidden" id="foto" name="foto">
-        <input type="number" name="estado" placeholder="Estado" required>
-        <video id="video" width="320" height="240" autoplay></video>
-        <button type="button" id="snap">Capturar Foto</button>
-        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-        <img id="capturedImage" width="320" height="240" style="display:none;">
-        <input type="submit" value="Agregar Docente">
-    </form>
+<div class="table-data">
+    <div class="order">
+        <main class="table" id="customers_table">
+            <section class="table__header">
+                <h1>Gestión de Docentes</h1>
+                <div class="input-group">
+                    <input type="search" placeholder="Buscar Docente...">
+                    <img src="/static/img/search.png" alt="">
+                </div>
+                
+                <div class="export__file">
+                    <label for="export-file" class="export__file-btn" title="Exportar Archivo"></label>
+                    <input type="checkbox" id="export-file">
+                    <div class="export__file-options">
+                        <label>Exportar Como &nbsp; &#10140;</label>
+                        <label for="export-file" id="toPDF">PDF <img src="/static/img/pdf.png" alt=""></label>
+                        <label for="export-file" id="toJSON">JSON <img src="/static/img/json.png" alt=""></label>
+                        <label for="export-file" id="toCSV">CSV <img src="/static/img/csv.png" alt=""></label>
+                        <label for="export-file" id="toEXCEL">EXCEL <img src="/static/img/excel.png" alt=""></label>
+                    </div>
+                </div>
+            </section>
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Nombre <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Apellido <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Correo <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Foto <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Estado <span class="icon-arrow">&UpArrow;</span></th>
+                            <th> Acciones <span class="icon-arrow">&UpArrow;</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for docente in docentes %}
+                        <tr>
+                            <td>{{ docente.id }}</td>
+                            <td>{{ docente.nombre }}</td>
+                            <td>{{ docente.apellido }}</td>
+                            <td>{{ docente.email }}</td>
+                            <td><img src="data:image/png;base64,{{ docente.foto }}" width="50"></td>
+                            <td>{{ docente.estado }}</td>
+                            <td>
+                                <form action="/delete_docente/{{ docente.id }}" method="post" style="display:inline;">
+                                    <input type="submit" value="Inactivar">
+                                </form>
+                                <button type="button" onclick="showEditModal('{{ docente.id }}', '{{ docente.nombre }}', '{{ docente.apellido }}', '{{ docente.email }}', '{{ docente.foto }}', '{{ docente.estado }}')">Editar</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
 
-    <h2>Docentes</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo</th>
-                <th>Foto</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for docente in docentes %}
-            <tr>
-                <td>{{ docente.id }}</td>
-                <td>{{ docente.nombre }}</td>
-                <td>{{ docente.apellido }}</td>
-                <td>{{ docente.email }}</td>
-                <td><img src="data:image/png;base64,{{ docente.foto }}" width="50"></td>
-                <td>{{ docente.estado }}</td>
-                <td>
-                    <form action="/delete_docente/{{ docente.id }}" method="post" style="display:inline;">
-                        <input type="submit" value="Inactivar">
-                    </form>
-                    <button type="button" onclick="editDocente('{{ docente.id }}', '{{ docente.nombre }}', '{{ docente.apellido }}', '{{ docente.email }}', '{{ docente.foto }}', '{{ docente.estado }}')">Editar</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <h2>Actualizar Docente</h2>
-    <form id="updateDocenteForm" action="/update_docente" method="post">
-        <input type="hidden" id="docenteId" name="id">
-        <input type="text" id="updateNombreDocente" name="nombre" placeholder="Nombre" required>
-        <input type="text" id="updateApellidoDocente" name="apellido" placeholder="Apellido" required>
-        <input type="email" id="updateEmailDocente" name="email" placeholder="Correo" required>
-        <input type="hidden" id="updateFotoDocente" name="foto">
-        <input type="number" id="updateEstadoDocente" name="estado" placeholder="Estado" required>
-        <img id="updateCapturedImage" width="320" height="240" style="display:none;">
-        <input type="submit" value="Actualizar Docente">
-    </form>
-
-    <script>
-        var video = document.querySelector("#video");
-        var canvas = document.querySelector("#canvas");
-        var context = canvas.getContext("2d");
-        var snap = document.querySelector("#snap");
-        var capturedImage = document.querySelector("#capturedImage");
-        var updateCapturedImage = document.querySelector("#updateCapturedImage");
-
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(err) {
-                console.log("Error: " + err);
-            });
-
-        snap.addEventListener("click", function() {
-            context.drawImage(video, 0, 0, 320, 240);
-            var dataURL = canvas.toDataURL("image/png");
-            document.querySelector("#foto").value = dataURL;
-            capturedImage.src = dataURL;
-            capturedImage.style.display = 'block';
-        });
-
-        function editDocente(id, nombre, apellido, email, foto, estado) {
-            document.getElementById('docenteId').value = id;
-            document.getElementById('updateNombreDocente').value = nombre;
-            document.getElementById('updateApellidoDocente').value = apellido;
-            document.getElementById('updateEmailDocente').value = email;
-            document.getElementById('updateEstadoDocente').value = estado;
-            document.getElementById('updateFotoDocente').value = foto;
-            updateCapturedImage.src = foto ? "data:image/png;base64," + foto : "";
-            updateCapturedImage.style.display = foto ? 'block' : 'none';
-        }
-    </script>
+    <div class="todo">
+        <div class="head">
+            <h3>Tareas</h3>            
         </div>
+        <form id="addDocenteForm" action="/add_docente" method="post" enctype="multipart/form-data">
+            <ul class="todo-list">
+                <li class="completed">
+                    <div class="container">
+                        <input type="text" name="nombre" class="input" required="">
+                        <label class="label">Nombre del docente</label>
+                    </div>                
+                </li>
+                <li class="completed">
+                    <div class="container">
+                        <input type="text" name="apellido" class="input" required="">
+                        <label class="label">Apellido del docente</label>
+                    </div>                
+                </li>
+                <li class="completed">
+                    <div class="container">
+                        <input type="email" name="email" class="input" required="">
+                        <label class="label">Correo del docente</label>
+                    </div>                
+                </li>
+                <li class="completed">
+                    <div class="container">
+                        <input type="hidden" id="foto" name="foto">
+                        <video id="video" width="320" height="240" autoplay></video>
+                        <button type="button" id="snap">Capturar Foto</button>
+                        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+                        <img id="capturedImage" width="320" height="240" style="display:none;">
+                    </div>                
+                </li>
+                <li class="not-completed">
+                    <div class="container">
+                        <input type="number" name="estado" class="input" required="">
+                        <label class="label">Estado del docente</label>
+                    </div>                
+                </li>
+                <li class="not-completed">
+                    <button class="button" type="submit" value="Agregar Docente">Agregar Docente</button>
+                </li>
+            </ul>
+        </form>
     </div>
 </div>
+
+<!-- Modal para Actualizar Docente -->
+<div id="editModal" class="modal">
+    <div class="modal-content login-box">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Actualizar Docente</h2>
+        <form id="updateDocenteForm" action="/update_docente" method="post">
+            <div class="user-box">
+                <input type="hidden" id="docenteId" name="id">
+            </div>
+            <div class="user-box">
+                <input type="text" id="updateNombreDocente" name="nombre" required="">
+                <label>Nombre actualizado</label>
+            </div>
+            <div class="user-box">
+                <input type="text" id="updateApellidoDocente" name="apellido" required="">
+                <label>Apellido actualizado</label>
+            </div>
+            <div class="user-box">
+                <input type="email" id="updateEmailDocente" name="email" required="">
+                <label>Correo actualizado</label>
+            </div>
+            <div class="user-box">
+                <input type="hidden" id="updateFotoDocente" name="foto">
+                <img id="updateCapturedImage" width="320" height="240" style="display:none;">
+            </div>
+            <div class="user-box">
+                <input type="number" id="updateEstadoDocente" name="estado" required="">
+                <label>Estado actualizado</label>
+            </div>
+            <center>
+                <a href="#" onclick="document.getElementById('updateDocenteForm').submit(); return false;">
+                    Actualizar Docente
+                    <span></span>
+                </a>
+            </center>
+        </form>
+    </div>
+</div>
+
+<script>
+    var video = document.querySelector("#video");
+    var canvas = document.querySelector("#canvas");
+    var context = canvas.getContext("2d");
+    var snap = document.querySelector("#snap");
+    var capturedImage = document.querySelector("#capturedImage");
+    var updateCapturedImage = document.querySelector("#updateCapturedImage");
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err) {
+            console.log("Error: " + err);
+        });
+
+    snap.addEventListener("click", function() {
+        context.drawImage(video, 0, 0, 320, 240);
+        var dataURL = canvas.toDataURL("image/png");
+        document.querySelector("#foto").value = dataURL;
+        capturedImage.src = dataURL;
+        capturedImage.style.display = 'block';
+    });
+
+    function showEditModal(id, nombre, apellido, email, foto, estado) {
+        document.getElementById('docenteId').value = id;
+        document.getElementById('updateNombreDocente').value = nombre;
+        document.getElementById('updateApellidoDocente').value = apellido;
+        document.getElementById('updateEmailDocente').value = email;
+        document.getElementById('updateEstadoDocente').value = estado;
+        document.getElementById('updateFotoDocente').value = foto;
+        updateCapturedImage.src = foto ? "data:image/png;base64," + foto : "";
+        updateCapturedImage.style.display = foto ? 'block' : 'none';
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('editModal')) {
+            closeEditModal();
+        }
+    }
+</script>
 {% endblock %}

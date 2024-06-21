@@ -4,58 +4,72 @@
 
 {% block body %}
 <div class="container mt-5">
-    <div class="contenidoPrimaria mb-4">
-        <p id="plat1">Contenido</p>
-        <p id="plat2">CONTENIDO DE LOS DATOS DE LA MATERIA</p>
-        <p id="plat3">CONTENIDO DE LOS DATOS DE LA MATERIA</p>
-    </div>
-    <div class="contenidoSecundaria">
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="form bg-dark text-white p-4 rounded">
-                    <h2 class="text-center">Ingrese los datos de la Materia</h2>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Nombre">
-                    </div>
-                    <div class="mb-3">
-                        <label for="carrera_id" class="form-label">Carrera:</label>
-                        <select id="carrera_id" class="form-select">
-                            <!-- Opciones de carrera cargadas dinámicamente -->
-                        </select>
-                    </div>
-                    <input type="hidden" id="materiaId">
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary" onclick="addMateria()">Guardar</button>
-                        <button class="btn btn-secondary" onclick="updateMateria()">Actualizar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="table bg-dark text-white p-4 rounded">
-                    <div class="table-header mb-3 d-flex justify-content-between">
-                        <input type="text" id="search" class="form-control w-50" placeholder="Buscar por nombre" onkeyup="searchMaterias()">
-                        <div>
-                            <button class="btn btn-warning me-2" onclick="editMateriaFieldText()">Editar</button>
-                            <button class="btn btn-danger" onclick="deleteMaterias()">Borrar</button>
-                        </div>
-                    </div>
-                    <table id="dataTable" class="table table-dark table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Seleccionar</th>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Carrera ID</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se llenarán dinámicamente los datos de las materias -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1>Career and Subject Manager</h1>
+    
+    <h2>Agregar Materia</h2>
+    <form id="addMateriaForm" action="/add_materia" method="post">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <select name="carrera_id" required>
+            <option value="">Seleccione Carrera</option>
+            {% for carrera in carreras %}
+            <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Agregar Materia">
+    </form>
+
+    <h2>Materias</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Carrera</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for materia in materias %}
+            <tr>
+                <td>{{ materia.id }}</td>
+                <td>{{ materia.nombre }}</td>
+                <td>{{ materia.carrera_nombre }}</td>
+                <td>{{ materia.estado }}</td>
+                <td>
+                    <form action="/delete_materia/{{ materia.id }}" method="post" style="display:inline;">
+                        <input type="submit" value="Inactivar">
+                    </form>
+                    <button type="button" onclick="editMateria('{{ materia.id }}', '{{ materia.nombre }}', '{{ materia.carrera_id }}', '{{ materia.estado }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Actualizar Materia</h2>
+    <form id="updateMateriaForm" action="/update_materia" method="post">
+        <input type="hidden" id="materiaId" name="id">
+        <input type="text" id="updateNombreMateria" name="nombre" placeholder="Nombre" required>
+        <select id="updateCarreraId" name="carrera_id" required>
+            <option value="">Seleccione Carrera</option>
+            {% for carrera in carreras %}
+            <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" id="updateEstadoMateria" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Actualizar Materia">
+    </form>
+
+    <script>
+        function editMateria(id, nombre, carrera_id, estado) {
+            document.getElementById('materiaId').value = id;
+            document.getElementById('updateNombreMateria').value = nombre;
+            document.getElementById('updateCarreraId').value = carrera_id;
+            document.getElementById('updateEstadoMateria').value = estado;
+        }
+    </script>
+
 </div>
 {% endblock %}

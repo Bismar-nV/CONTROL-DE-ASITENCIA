@@ -4,99 +4,126 @@
 
 {% block body %}
 <div class="container mt-5">
-    <div class="contenidoPrimaria mb-4">
-        <p id="plat1">Contenido</p>
-        <p id="plat2">CONTENIDO DE LOS DATOS DEL ESTUDIANTE</p>
-        <p id="plat3">CONTENIDO DE LOS DATOS DEL ESTUDIANTE</p>
-    </div>
-    <div class="contenidoSecundaria">
-        <div class="row">
-            <h1>Student Manager</h1>
-        <form id="addStudentForm" action="/add_student" method="post" enctype="multipart/form-data">
-            <input type="text" name="nombre" placeholder="Nombre" required>
-            <input type="text" name="apellido" placeholder="Apellido" required>
-            <input type="email" name="email" placeholder="Correo" required>
-            <input type="hidden" id="foto" name="foto">
-            <input type="text" name="estado" placeholder="Estado" required>
-            <video id="video" width="320" height="240" autoplay></video>
-            <button type="button" id="snap">Capturar Foto</button>
-            <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-            <input type="submit" value="Agregar Estudiante">
-        </form>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Foto</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in students %}
-                <tr>
-                    <td>{{ student.id }}</td>
-                    <td>{{ student.nombre }}</td>
-                    <td>{{ student.apellido }}</td>
-                    <td>{{ student.email }}</td>
-                    <td><img src="data:image/png;base64,{{ student.foto }}" width="50"></td>
-                    <td>{{ student.estado }}</td>
-                    <td>
-                        <form action="/delete_student/{{ student.id }}" method="post" style="display:inline;">
-                            <input type="submit" value="Eliminar">
-                        </form>
-                        <button onclick="editStudent('{{ student.id }}', '{{ student.nombre }}', '{{ student.apellido }}', '{{ student.email }}', '{{ student.foto }}', '{{ student.estado }}')">Editar</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <h1>Student Manager</h1>
+    <form id="addEstudianteForm" action="/add_estudiante" method="post" enctype="multipart/form-data">
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+        <input type="text" name="apellido" id="apellido" placeholder="Apellido" required>
+        <input type="email" name="email" placeholder="Correo" required>
+        <input type="hidden" id="foto" name="foto" placeholder="Correo" required>
+        <input type="number" name="estado" placeholder="Estado" required>
+        <video id="video" width="320" height="240" autoplay></video>
+        <button type="button" id="snap">Capturar Foto</button>
+        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+        <img id="capturedImage" width="320" height="240" style="display:none;">
+        <input type="submit" value="Agregar Estudiante">
+    </form>
 
-        <h2>Actualizar Estudiante</h2>
-        <form id="updateForm" action="/update_student" method="post">
-            <input type="hidden" id="studentId" name="id">
-            <input type="text" id="updateNombre" name="nombre" placeholder="Nombre" required>
-            <input type="text" id="updateApellido" name="apellido" placeholder="Apellido" required>
-            <input type="email" id="updateEmail" name="email" placeholder="Correo" required>
-            <input type="hidden" id="updateFoto" name="foto">
-            <input type="text" id="updateEstado" name="estado" placeholder="Estado" required>
-            <input type="submit" value="Actualizar Estudiante">
-        </form>
+    <h2>Estudiantes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Foto</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.id }}</td>
+                <td>{{ estudiante.nombre }}</td>
+                <td>{{ estudiante.apellido }}</td>
+                <td>{{ estudiante.email }}</td>
+                <td><img src="data:image/png;base64,{{ estudiante.foto }}" width="50"></td>
+                <td>{{ estudiante.estado }}</td>
+                <td>
+                    <form action="/delete_estudiante/{{ estudiante.id }}" method="post" style="display:inline;">
+                        <input type="submit" value="Inactivar">
+                    </form>
+                    <button onclick="editEstudiante('{{ estudiante.id }}', '{{ estudiante.nombre }}', '{{ estudiante.apellido }}', '{{ estudiante.email }}', '{{ estudiante.foto }}', '{{ estudiante.estado }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        <script>
-            // Acceder a la cámara y capturar la foto
-            var video = document.querySelector("#video");
-            var canvas = document.querySelector("#canvas");
-            var context = canvas.getContext("2d");
-            var snap = document.querySelector("#snap");
+    <h2>Actualizar Estudiante</h2>
+    <form id="updateEstudianteForm" action="/update_estudiante" method="post">
+        <input type="hidden" id="estudianteId" name="id">
+        <input type="text" id="updateNombre" name="nombre" placeholder="Nombre" required>
+        <input type="text" id="updateApellido" name="apellido" placeholder="Apellido" required>
+        <input type="email" id="updateEmail" name="email" placeholder="Correo" required>
+        <input type="hidden" id="updateFoto" name="foto"placeholder="Correo" required>
+        <input type="number" id="updateEstado" name="estado" placeholder="Estado" required>
+        <img id="updateCapturedImage" width="320" height="240" style="display:none;">
+        <input type="submit" value="Actualizar Estudiante">
+    </form>
 
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(err) {
-                    console.log("Error: " + err);
-                });
+    
 
-            snap.addEventListener("click", function() {
-                context.drawImage(video, 0, 0, 320, 240);
-                var dataURL = canvas.toDataURL("image/png");
-                document.querySelector("#foto").value = dataURL;
+    <script>
+        var video = document.querySelector("#video");
+        var canvas = document.querySelector("#canvas");
+        var context = canvas.getContext("2d");
+        var snap = document.querySelector("#snap");
+        var capturedImage = document.querySelector("#capturedImage");
+        var updateCapturedImage = document.querySelector("#updateCapturedImage");
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.log("Error: " + err);
             });
 
-            function editStudent(id, nombre, apellido, email, foto, estado) {
-                document.getElementById('studentId').value = id;
-                document.getElementById('updateNombre').value = nombre;
-                document.getElementById('updateApellido').value = apellido;
-                document.getElementById('updateEmail').value = email;
-                document.getElementById('updateEstado').value = estado;
-                document.getElementById('updateFoto').value = foto;
+        snap.addEventListener("click", function() {
+            context.drawImage(video, 0, 0, 320, 240);
+            var dataURL = canvas.toDataURL("image/png");
+            document.querySelector("#foto").value = dataURL;
+            capturedImage.src = dataURL;
+            capturedImage.style.display = 'block';
+        });
+
+        function editEstudiante(id, nombre, apellido, email, foto, estado) {
+            document.getElementById('estudianteId').value = id;
+            document.getElementById('updateNombre').value = nombre;
+            document.getElementById('updateApellido').value = apellido;
+            document.getElementById('updateEmail').value = email;
+            document.getElementById('updateEstado').value = estado;
+            document.getElementById('updateFoto').value = foto;
+            updateCapturedImage.src = foto ? "data:image/png;base64," + foto : "";
+            updateCapturedImage.style.display = foto ? 'block' : 'none';
+        }
+
+        function capturePhoto() {
+            var nombre = document.getElementById('nombre').value;
+            var apellido = document.getElementById('apellido').value;
+
+            if (nombre && apellido) {
+                fetch('/capture_photo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `nombre=${nombre}&apellido=${apellido}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Photo captured');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert("Por favor, ingrese nombre y apellido antes de capturar la foto.");
             }
-        </script>
-            </div>
-        </div>
+        }
+    </script>
+
 </div>
 {% endblock %}

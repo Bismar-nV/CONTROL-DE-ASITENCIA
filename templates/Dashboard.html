@@ -1,105 +1,134 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block body %}
-<div class="contenidoPrimaria">
-    <p id="plat1">Contenido</p>
-    <p id="plat2">CONTENIDO DE LOS DATOS DEL usuario</p>
-    <p id="plat3">CONTENIDO DE LOS DATOS DEL usuario</p>
+<div class="head-title">
+    <div class="left">
+        <h1>Dashboard</h1>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li><i class='bx bx-chevron-right' ></i></li>
+            <li>
+                <a class="active" href="#">Home</a>
+            </li>
+        </ul> 
+    </div>
+    
 </div>
-<div class="contenidoSecundaria">
-    <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/editar1.png" alt="Cajas" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">CAJAS</h5>
-                    <p class="card-text">74 Registradas</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Aquí van las otras tarjetas similares -->
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/categories.png" alt="Categorías" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">CATEGORÍAS</h5>
-                    <p class="card-text">33 Registradas</p>
-                </div>
-            </div>
+<ul class="box-info">
+    <li>
+        <i class='bx bxs-calendar-check' ></i>
+        <span class="text">
+            <h3>1020</h3>
+            <p>New Order</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-group' ></i>
+        <span class="text">
+            <h3>2834</h3>
+            <p>Visitors</p>
+        </span>
+    </li>
+    <li>
+        <i class='bx bxs-dollar-circle' ></i>
+        <span class="text">
+            <h3>$2543</h3>
+            <p>Total Sales</p>
+        </span>
+    </li>
+</ul>
+<div class="table-data">
+    <div class="order">
+        <div class="head">
+            <h3>Recent Orders</h3>
+            <i class='bx bx-search' ></i>
+            <i class='bx bx-filter' ></i>
         </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/users.png" alt="Usuarios" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">USUARIOS</h5>
-                    <p class="card-text">62 Registrados</p>
-                </div>
-            </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Date Order</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="img/people.png">
+                        <p>John Doe</p>
+                    </td>
+                    <td>01-10-2021</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="img/people.png">
+                        <p>John Doe</p>
+                    </td>
+                    <td>01-10-2021</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="img/people.png">
+                        <p>John Doe</p>
+                    </td>
+                    <td>01-10-2021</td>
+                    <td><span class="status process">Process</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="img/people.png">
+                        <p>John Doe</p>
+                    </td>
+                    <td>01-10-2021</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="img/people.png">
+                        <p>John Doe</p>
+                    </td>
+                    <td>01-10-2021</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="todo">
+        <div class="head">
+            <h3>Todos</h3>
+            <i class='bx bx-plus' ></i>
+            <i class='bx bx-filter' ></i>
         </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/products.png" alt="Productos" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">PRODUCTOS</h5>
-                    <p class="card-text">138 Registrados</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/clients.png" alt="Clientes" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">CLIENTES</h5>
-                    <p class="card-text">54 Registrados</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/settings.png" alt="Movimientos" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">MOVIMIENTOS</h5>
-                    <p class="card-text">...</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/sales.png" alt="Ventas" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">VENTAS</h5>
-                    <p class="card-text">...</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/returns.png" alt="Devoluciones" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">DEVOLUCIONES</h5>
-                    <p class="card-text">...</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <img src="/static/img/reports.png" alt="Reportes" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">REPORTES</h5>
-                    <p class="card-text">...</p>
-                </div>
-            </div>
-        </div>
+        <ul class="todo-list">
+            <li class="completed">
+                <p>Todo List</p>
+                <i class='bx bx-dots-vertical-rounded' ></i>
+            </li>
+            <li class="completed">
+                <p>Todo List</p>
+                <i class='bx bx-dots-vertical-rounded' ></i>
+            </li>
+            <li class="not-completed">
+                <p>Todo List</p>
+                <i class='bx bx-dots-vertical-rounded' ></i>
+            </li>
+            <li class="completed">
+                <p>Todo List</p>
+                <i class='bx bx-dots-vertical-rounded' ></i>
+            </li>
+            <li class="not-completed">
+                <p>Todo List</p>
+                <i class='bx bx-dots-vertical-rounded' ></i>
+            </li>
+        </ul>
     </div>
 </div>
 {% endblock %}

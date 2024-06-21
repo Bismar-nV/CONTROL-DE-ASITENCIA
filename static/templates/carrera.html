@@ -4,51 +4,57 @@
 
 {% block body %}
 <div class="container mt-5">
-    <div class="contenidoPrimaria mb-4">
-        <p id="plat1">Contenido</p>
-        <p id="plat2">CONTENIDO DE LOS DATOS DE LA CARRERA</p>
-        <p id="plat3">CONTENIDO DE LOS DATOS DE LA CARRERA</p>
-    </div>
-    <div class="contenidoSecundaria">
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="form bg-dark text-white p-4 rounded">
-                    <h2 class="text-center">Ingrese los datos de la Carrera</h2>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Nombre">
-                    </div>
-                    <input type="hidden" id="carreraId">
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary" onclick="addCarrera()">Guardar</button>
-                        <button class="btn btn-secondary" onclick="updateCarrera()">Actualizar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="table bg-dark text-white p-4 rounded">
-                    <div class="table-header mb-3 d-flex justify-content-between">
-                        <input type="text" id="search" class="form-control w-50" placeholder="Buscar por nombre" onkeyup="searchCarreras()">
-                        <div>
-                            <button class="btn btn-warning me-2" onclick="editCarreraFieldText()">Editar</button>
-                            <button class="btn btn-danger" onclick="deleteCarreras()">Borrar</button>
-                        </div>
-                    </div>
-                    <table id="dataTable" class="table table-dark table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Seleccionar</th>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se llenarán dinámicamente los datos de las carreras -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1>Career Manager</h1>
+    
+    <h2>Agregar Carrera</h2>
+    <form id="addCarreraForm" action="/add_carrera" method="post">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="number" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Agregar Carrera">
+    </form>
+
+    <h2>Carreras</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carrera in carreras %}
+            <tr>
+                <td>{{ carrera.id }}</td>
+                <td>{{ carrera.nombre }}</td>
+                <td>{{ carrera.estado }}</td>
+                <td>
+                    <form action="/delete_carrera/{{ carrera.id }}" method="post" style="display:inline;">
+                        <input type="submit" value="Inactivar">
+                    </form>
+                    <button type="button" onclick="editCarrera('{{ carrera.id }}', '{{ carrera.nombre }}', '{{ carrera.estado }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Actualizar Carrera</h2>
+    <form id="updateCarreraForm" action="/update_carrera" method="post">
+        <input type="hidden" id="carreraId" name="id">
+        <input type="text" id="updateNombreCarrera" name="nombre" placeholder="Nombre" required>
+        <input type="number" id="updateEstadoCarrera" name="estado" placeholder="Estado" required>
+        <input type="submit" value="Actualizar Carrera">
+    </form>
+
+    <script>
+        function editCarrera(id, nombre, estado) {
+            document.getElementById('carreraId').value = id;
+            document.getElementById('updateNombreCarrera').value = nombre;
+            document.getElementById('updateEstadoCarrera').value = estado;
+        }
+    </script>
+
 </div>
 {% endblock %}

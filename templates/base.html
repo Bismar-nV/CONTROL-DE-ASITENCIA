@@ -1,123 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="/static/css/cruds.css">
-    <link rel="stylesheet" href="/static/css/content.css">
-    <link rel="stylesheet" href="/static/css/clase.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/imputs.css">
+    <link rel="stylesheet" href="/static/css/button.css">
+    <link rel="stylesheet" href="/static/css/imputs.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
+    <link rel="stylesheet" href="/static/css/table.css">
+	<title>GRUD PDI</title>
 </head>
-<body class="fond">
-    <div class="menu">
-        <ion-icon name="menu-outline"></ion-icon>
-        <ion-icon name="close-outline"></ion-icon>
-    </div>
+<body>
 
-    <div class="barra-lateral">
-        <div>
-            <div class="nombre-pagina">
-                <ion-icon id="cloud" name="cloud-outline"></ion-icon>
-                <span>Apex</span>
-            </div>            
-        </div>
 
-        <nav class="navegacion">
-            <ul>
-                <li>
-                    <a id="inbox" href="{{ url_for('dashboard') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>MENU</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('estudiante') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>estudiante</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('docente') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>docente</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('carrera') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>carrera</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('materia') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>materia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('aula') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>aula</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('clases') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>clase</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('asistencia') }}">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                        <span>asistencia</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">RECONOCIENTO FACIAL</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a id="inbox" href="{{ url_for('index') }}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('estudiante') }}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">estudiante</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('docente') }}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">docente</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('carrera') }}">
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">carrera</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('materia') }}">
+					<i class='bx bxs-group' ></i>
+					<span class="text">materia</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('aula') }}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">aula</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('clases') }}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">clase</span>
+				</a>
+			</li>
+			<li>
+                <a href="{{ url_for('asistencia') }}">
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">asistencia</span>
+				</a>
+			</li>			
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
 
-        <div>
-            <div class="linea"></div>
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
 
-            <div class="modo-oscuro">
-                <div class="info">
-                    <ion-icon name="moon-outline"></ion-icon>
-                    <span>Dark Mode</span>
-                </div>
-                <div class="switch">
-                    <div class="base">
-                        <div class="circulo">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="usuario">
-                <img src="/static/img/Jhampier.jpg" alt="">
-                <div class="info-usuario">
-                    <div class="nombre-email">
-                        <span class="nombre">Jhampier</span>
-                        <span class="email">jhampier@gmail.com</span>
-                    </div>
-                    <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <main>
-        <div class="content">
+		<!-- MAIN -->
+		<main>
             {% block body %}
             {% endblock %}
-        </div>        
-    </main>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="/static/js/script.js"></script>
-    <script src="/static/js/botones.js"></script>
-    
+	<script src="/static/js/script.js"></script>
+    <script src="/static/js/table.js"></script>
 </body>
 </html>

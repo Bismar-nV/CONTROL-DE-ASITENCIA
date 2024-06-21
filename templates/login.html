@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Manager</title>
-    <link rel="stylesheet" href="/proyecctoFinal/static/css/styles.css">
-    <link rel="stylesheet" href="/proyecctoFinal/static/css/imputs.css">
-
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/imputs.css">
 </head>
 <body>
     <div class="login-box">
- 
-        <form>
+        <form action="/login" method="post">
           <div class="user-box">
-            <input type="text" name="" required="">
+            <input type="text" name="username" required="">
             <label>Username</label>
           </div>
           <div class="user-box">
-            <input type="password" name="" required="">
+            <input type="password" name="password" required="">
             <label>Password</label>
-          </div><center>
-          <a href="#">
-                 SEND
-             <span></span>
-          </a></center>
+          </div>
+          <center>
+          <button type="submit">SEND</button>
+          </center>
         </form>
       </div>
-    <script src="/proyecctoFinal/static/js/script.js"></script>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
